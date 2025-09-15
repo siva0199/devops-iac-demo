@@ -1,6 +1,16 @@
 resource "aws_s3_bucket" "uploads" {
-  bucket = "demo-upload-bucket"
+  bucket        = "demo-upload-bucket"
+  force_destroy = true
+  tags = {
+    Name = "demo-upload-bucket"
+  }
 }
+
+resource "aws_s3_bucket_acl" "uploads_acl" {
+  bucket = aws_s3_bucket.uploads.id
+  acl    = "private"
+}
+
 
 resource "aws_s3_bucket_public_access_block" "uploads" {
   bucket = aws_s3_bucket.uploads.id
@@ -17,11 +27,11 @@ data "archive_file" "lambda" {
 }
 
 resource "aws_lambda_function" "upload" {
-  filename      = "lambda_function.zip"
-  function_name = "upload_lambda"
-  role          = var.lambda_execution_role_arn
-  handler       = "lambda_function.lambda_handler"
-  runtime       = "python3.12"
+  filename         = "lambda_function.zip"
+  function_name    = "upload_lambda"
+  role            = var.lambda_execution_role_arn
+  handler         = "lambda_function.lambda_handler"
+  runtime         = "python3.12"
   source_code_hash = data.archive_file.lambda.output_base64sha256
 }
 
@@ -55,3 +65,4 @@ resource "aws_apigatewayv2_stage" "default" {
   name        = "$default"
   auto_deploy = true
 }
+
