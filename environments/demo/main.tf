@@ -4,19 +4,19 @@ module "vpc" {
 }
 
 module "lambda" {
-  source                  = "../../modules/lambda"
+  source                    = "../../modules/lambda"
   lambda_execution_role_arn = module.iam.lambda_execution_role_arn
 }
 
 module "iam" {
-  source          = "../../modules/iam"
-  s3_bucket_arn   = module.lambda.s3_bucket_arn
+  source        = "../../modules/iam"
+  s3_bucket_arn = module.lambda.s3_bucket_arn
 }
 
 module "alb" {
-  source            = "../../modules/alb"
-  vpc_id            = module.vpc.vpc_id
-  public_subnet_id  = module.vpc.public_subnet_id
+  source           = "../../modules/alb"
+  vpc_id           = module.vpc.vpc_id
+  public_subnet_id = module.vpc.public_subnet_id
 }
 
 module "ecs" {
