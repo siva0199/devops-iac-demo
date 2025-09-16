@@ -18,8 +18,8 @@ module "iam" {
 }
 
 module "alb" {
-  source           = "../../modules/alb"
-  vpc_id           = module.vpc.vpc_id
+  source             = "../../modules/alb"
+  vpc_id             = module.vpc.vpc_id
   public_subnet_ids  = [module.vpc.public_subnet_id_a, module.vpc.public_subnet_id_b]
 }
 module "ecs" {
