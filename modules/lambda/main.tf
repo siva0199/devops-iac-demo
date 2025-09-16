@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "uploads" {
-  bucket        = "demo-upload-bucket"
+  bucket = "unique-demo-upload-bucket-123456"
   force_destroy = true
   tags = {
     Name = "demo-upload-bucket"
